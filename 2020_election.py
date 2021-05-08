@@ -12,9 +12,9 @@ def build_govenors_heatmap():
     #set_pandas restrictions from utils
     set_pandas()
     #Building 3 seperate DataFrames based on State/County/candidate data
-    gstate = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/governors_state.csv")
-    gcounties = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/governors_county.csv")
-    gcounties_can = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/president_county_candidate.csv")
+    gstate = pd.read_csv("../archive/governors_state.csv")
+    gcounties = pd.read_csv("../archive/governors_county.csv")
+    gcounties_can = pd.read_csv("../archive/president_county_candidate.csv")
 
     #merge 3 DFs into 1
     merged_gdata = gcounties.merge(gcounties_can,how="left", on=["state","county"])
@@ -48,7 +48,7 @@ def build_County_heatmap():
     #set_pandas restrictions from utils
     set_pandas()
     #Building DataFrames based on candidate data
-    df_pres = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/president_county_candidate.csv")
+    df_pres = pd.read_csv("../archive/president_county_candidate.csv")
     #set party variables
     rep = df_pres['party'] == 'REP'
     dem = df_pres['party'] == 'DEM'
@@ -58,7 +58,7 @@ def build_County_heatmap():
     df_pres = df_pres.unstack()
     df_pres = df_pres.reset_index()
     #load latitude & longitude file into a dataframe & take just the state & state code columns
-    states = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/latitude-and-longitude-for-every-country-and-state.csv")
+    states = pd.read_csv("../archive/latitude-and-longitude-for-every-country-and-state.csv")
     states = states[['usa_state', 'usa_state_code']]
     #merge states & pres data ###Important evaluate column names, the rename here converts back to strings as this often returns Tuple data types which will give key errors
     merged = df_pres.merge(states, left_on='state', right_on='usa_state')
@@ -80,7 +80,7 @@ def build_County_heatmap():
 def build_Wash_map():
     '''Build Simple bar chart of Party choices specific to Washignton State'''
     set_pandas()
-    df_pres = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/president_county_candidate.csv")
+    df_pres = pd.read_csv("../archive/president_county_candidate.csv")
     #set party variables
     rep = df_pres['party'] == 'REP'
     dem = df_pres['party'] == 'DEM'
@@ -96,8 +96,8 @@ def build_Wash_map():
 def build_US_votemap():
     '''Build a votemap of relevant Presiential Vote Counts by State'''
     set_pandas()
-    df_pres = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/president_state.csv")
-    states = pd.read_csv("/Users/agostinofante/Desktop/anthony-tino-datasets/archive/latitude-and-longitude-for-every-country-and-state.csv")
+    df_pres = pd.read_csv(".../archive/president_state.csv")
+    states = pd.read_csv(".../archive/latitude-and-longitude-for-every-country-and-state.csv")
     states = states[['usa_state', 'usa_state_code']]
     merged = df_pres.merge(states, left_on='state', right_on='usa_state')
     fig = px.choropleth(merged,
